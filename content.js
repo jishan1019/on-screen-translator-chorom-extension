@@ -1,4 +1,4 @@
-document.addEventListener("mouseup", async () => {
+document.addEventListener("mouseup", async (event) => {
   const selection = window.getSelection().toString().trim();
   if (selection) {
     const translatedText = await translateToBangla(selection);
@@ -30,5 +30,12 @@ function displayTranslation(original, translated) {
   overlay.style.top = `${window.scrollY + rect.top - overlay.offsetHeight}px`;
   overlay.style.left = `${window.scrollX + rect.left}px`;
 
-  setTimeout(() => overlay.remove(), 5000);
+  // Remove the overlay when clicking anywhere on the page
+  document.addEventListener(
+    "click",
+    () => {
+      overlay.remove();
+    },
+    { once: true }
+  ); // { once: true } ensures the event listener is called only once
 }
